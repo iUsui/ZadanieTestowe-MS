@@ -8,7 +8,10 @@ public abstract class Cube : MonoBehaviour
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] public float movementSpeed = 5.0f;
     [SerializeField] public Health health = null;
-    [NonSerialized] public EnemyManager enemyManager;
+    [SerializeField] private Renderer renderer = null;
+    private Color color;
+    [NonSerialized] public EnemyManager enemyManager = null;
+    [NonSerialized] public PlayerProps player = null;
     private void OnEnable() {
         health.OnDie += HandleOnDie;
     }
@@ -20,11 +23,16 @@ public abstract class Cube : MonoBehaviour
     }
     private void Start() {
         enemyManager = EnemyManager.instance;
+        player = PlayerProps.instance;
+        renderer.material.color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }
 
     private void Update() {
         rb.velocity = Vector3.back * movementSpeed;
     }
 
+    
+
     public abstract void HandleOnDie();
+    public abstract void OnTriggerEnter(Collider other);
 }

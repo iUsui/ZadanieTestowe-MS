@@ -17,6 +17,10 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject); 
             return;
         }
+        if (other.CompareTag("Enemy")) {
+            other.GetComponent<Health>().TakeDamage(attackDamage);
+            Destroy(gameObject);
+        }
          
     }
 }

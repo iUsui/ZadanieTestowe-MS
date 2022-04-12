@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 7160252867538592004}
   m_Layer: 0
   m_Name: Enemy-bigCube
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerId: -1
   maxHealth: 0
+  currentHealth: 0
 --- !u!114 &7160252867538592004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,4 +206,5 @@ MonoBehaviour:
   rb: {fileID: 5822212145200841681}
   movementSpeed: 5
   health: {fileID: 7160252867538592005}
-  enemyManager: {fileID: 0}
+  renderer: {fileID: 7160252867456971181}
+  damage: 10

@@ -77,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3973356081698734091}
   flySpeed: 25
-  attackDamage: 25
+  attackDamage: 50
 --- !u!1 &7279227739295245696
 GameObject:
   m_ObjectHideFlags: 0

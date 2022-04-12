@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8363151640362187223}
   m_Layer: 0
   m_Name: Enemy-smallCube
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,8 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fdb1991d0b28e4b9e4574f689bb72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerId: -1
+  ownerId: 5
   maxHealth: 100
+  currentHealth: 0
 --- !u!114 &8363151640362187223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,9 +92,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5310313069250382561}
-  movementSpeed: 5
+  movementSpeed: 15
   health: {fileID: 8363151640362187208}
-  enemyManager: {fileID: 0}
+  renderer: {fileID: 8363151640496291882}
+  damage: 10
 --- !u!1 &8363151640496291884
 GameObject:
   m_ObjectHideFlags: 0

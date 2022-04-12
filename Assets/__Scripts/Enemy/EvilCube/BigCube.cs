@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class BigCube : Cube
 {
+    [SerializeField] private int damage = 10;
     public override void HandleOnDie()
     {
         enemyManager.BigCubeDied();
+        Debug.Log($"rip");
+        Destroy(gameObject);
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wall")) {
+            player.GetHealth().TakeDamage(damage);
+            health.TakeDamage(health.GetCurrentHealth());
+        }
     }
 }

@@ -62,7 +62,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void SmallCubeDied() {
+    public void SmallCubeReachedRedLine() {
         foreach (var cube in cubes) {
             Health cubeHealth = cube.GetComponent<Health>();
             int addHealth = (int)(cubeHealth.GetMaxHealth() * 0.1);
@@ -72,9 +72,12 @@ public class EnemyManager : MonoBehaviour
     }
 
     public void BigCubeDied() {
+        Debug.Log("Im here 1..");
         foreach (var enemy in myFoes) {
+            Debug.Log("Im here fe..");
             float enemyHealth = enemy.GetCurrentHealth() / enemy.GetMaxHealth();
             if (enemyHealth < 0.5f) {
+                Debug.Log("Im here..");
                 enemy.SetCurrentHealth(enemy.GetMaxHealth());
             }
         }
