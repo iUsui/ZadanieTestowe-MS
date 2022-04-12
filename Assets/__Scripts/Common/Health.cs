@@ -6,7 +6,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int ownerId = -1;
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxHealth;
     private int currentHealth = 0;
     public event Action OnDie;
 
@@ -18,6 +18,9 @@ public class Health : MonoBehaviour
     }
     public void SetOwnerId(int newOwnerId) {
         ownerId = newOwnerId;
+    }
+    public void SetMaxHealth(int newMaxHealth) {
+        maxHealth = newMaxHealth;
     }
     private void Start() {
         OnSpawn?.Invoke(this);
