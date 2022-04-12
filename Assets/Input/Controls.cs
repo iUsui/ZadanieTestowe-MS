@@ -35,6 +35,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PlayerShotting"",
+                    ""type"": ""Button"",
+                    ""id"": ""27d4abad-a1d9-4f15-b765-970e136612a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -103,6 +112,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""PlayerMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ce82a78-bd47-4377-9f08-fab2c9c54079"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PlayerShotting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -124,6 +144,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_PlayerMovement = m_Player.FindAction("PlayerMovement", throwIfNotFound: true);
+        m_Player_PlayerShotting = m_Player.FindAction("PlayerShotting", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -184,11 +205,13 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_PlayerMovement;
+    private readonly InputAction m_Player_PlayerShotting;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PlayerMovement => m_Wrapper.m_Player_PlayerMovement;
+        public InputAction @PlayerShotting => m_Wrapper.m_Player_PlayerShotting;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -201,6 +224,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @PlayerMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerMovement;
                 @PlayerMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerMovement;
                 @PlayerMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerMovement;
+                @PlayerShotting.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerShotting;
+                @PlayerShotting.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerShotting;
+                @PlayerShotting.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerShotting;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -208,6 +234,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @PlayerMovement.started += instance.OnPlayerMovement;
                 @PlayerMovement.performed += instance.OnPlayerMovement;
                 @PlayerMovement.canceled += instance.OnPlayerMovement;
+                @PlayerShotting.started += instance.OnPlayerShotting;
+                @PlayerShotting.performed += instance.OnPlayerShotting;
+                @PlayerShotting.canceled += instance.OnPlayerShotting;
             }
         }
     }
@@ -224,5 +253,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnPlayerMovement(InputAction.CallbackContext context);
+        void OnPlayerShotting(InputAction.CallbackContext context);
     }
 }
