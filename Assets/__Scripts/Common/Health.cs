@@ -13,15 +13,30 @@ public class Health : MonoBehaviour
     public static event Action<Health> OnSpawn;
     public static event Action<Health> OnDespawn;
 
+
+#region Getters
+    public int GetCurrentHealth() {
+        return currentHealth;
+    }
+    public int GetMaxHealth() {
+        return maxHealth;
+    }
     public int GetOwnerId() {
         return ownerId;
     }
-    public void SetOwnerId(int newOwnerId) {
-        ownerId = newOwnerId;
+#endregion
+#region Setters
+    public void SetCurrentHealth(int newCurrentHealth) {
+        currentHealth = newCurrentHealth;
     }
     public void SetMaxHealth(int newMaxHealth) {
         maxHealth = newMaxHealth;
     }
+    public void SetOwnerId(int newOwnerId) {
+        ownerId = newOwnerId;
+    }
+#endregion
+
     private void Start() {
         OnSpawn?.Invoke(this);
         currentHealth = maxHealth;

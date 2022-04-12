@@ -8,12 +8,12 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     [SerializeField] private int myId = -1;
 
-    private List<Health> myFoes = new List<Health>();
-    private List<Cube> cubes = new List<Cube>();
-    private List<Sphere> spheres = new List<Sphere>();
-    private List<SmallSphere> smallSpheres = new List<SmallSphere>();
+    [SerializeField] private List<Health> myFoes = new List<Health>();
+    [SerializeField] private List<Cube> cubes = new List<Cube>();
+    [SerializeField] private List<Sphere> spheres = new List<Sphere>();
+    [SerializeField] private List<SmallSphere> smallSpheres = new List<SmallSphere>();
 
-    public int GetEnemyId() {
+    public int GetMyId() {
         return myId;
     }
 
@@ -60,5 +60,31 @@ public class EnemyManager : MonoBehaviour
                 smallSpheres.Remove(smallSphere);
             }
         }
+    }
+
+    public void SmallCubeDied() {
+        foreach (var cube in cubes) {
+            Health cubeHealth = cube.GetComponent<Health>();
+            int addHealth = (int)(cubeHealth.GetMaxHealth() * 0.1);
+            cubeHealth.SetMaxHealth(cubeHealth.GetMaxHealth() + addHealth);
+            cubeHealth.SetCurrentHealth(cubeHealth.GetCurrentHealth() + addHealth);
+        }
+    }
+
+    public void BigCubeDied() {
+        foreach (var enemy in myFoes) {
+            float enemyHealth = enemy.GetCurrentHealth() / enemy.GetMaxHealth();
+            if (enemyHealth < 0.5f) {
+                enemy.SetCurrentHealth(enemy.GetMaxHealth());
+            }
+        }
+    }
+
+    public void SmallSphereDied() {
+
+    }
+    
+    public void BigSphereDied() {
+
     }
 }

@@ -8,8 +8,6 @@ public class EnemySpawner : MonoBehaviour
     [Header("Small cube properties")]
     [SerializeField] private GameObject smallCubePrefab = null;
     [SerializeField] private float smallCubeSpawnRatio = 0.5f;
-    [SerializeField] private float smallCube_MovementSpeed = 5.0f;
-    [SerializeField] private int smallCube_MaxHealth = 100;
     [Header("Big cube properties")]
     [SerializeField] private GameObject bigCubePrefab = null;
     [SerializeField] private float bigCubeSpawnRatio = 0.15f;
@@ -28,7 +26,9 @@ public class EnemySpawner : MonoBehaviour
     
     private bool canSpawn = true;
 
-    private EnemyManager enemyManager;
+    private EnemyManager enemyManager = null;
+    private Health smallCubeHealthScript = null;
+    private Cube smallCubeScript = null;
 
     private void Start() {
         if (minTimeToSpawn > maxTimeToSpawn) { 
@@ -36,6 +36,8 @@ public class EnemySpawner : MonoBehaviour
             throw new Exception("max time to spawn has to be bigger than min time to spawn");
         }
         enemyManager = EnemyManager.instance;
+        smallCubeHealthScript = smallCubePrefab.GetComponent<Health>();
+        smallCubeScript = smallCubePrefab.GetComponent<Cube>();
     }
 
     private void Update() {
@@ -49,22 +51,27 @@ public class EnemySpawner : MonoBehaviour
                 UnityEngine.Random.Range(bottomLeftPoint.z, topRightPoint.z)
             );
             if (randomNumber <= smallCubeSpawnRatio) {
+                GameObject newSmallCube = smallCubePrefab;
+                newSmallCube.GetComponent<Health>().SetOwnerId(enemyManager.GetMyId());
                 Instantiate(smallCubePrefab, spawnPosition, smallCubePrefab.transform.rotation);
             }
             else if (randomNumber > smallCubeSpawnRatio && randomNumber < (smallCubeSpawnRatio+bigCubeSpawnRatio)) {
                 GameObject newBigCube = bigCubePrefab;
+                newBigCube.GetComponent<Health>().SetOwnerId(enemyManager.GetMyId());
                 Cube cube = newBigCube.GetComponent<Cube>();
-                cube.movementSpeed = smallCube_MovementSpeed * 0.8f;
-                cube.health.SetMaxHealth(smallCube_MaxHealth + (smallCube_MaxHealth/2));
+                cube.movementSpeed = smallCubeScript.GetMovementSpeed() * 0.8f;
+                cube.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth() + (smallCubeHealthScript.GetMaxHealth()/2));
                 Instantiate(newBigCube, spawnPosition, smallCubePrefab.transform.rotation);
             }
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio) && 
                 randomNumber < (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio)) {
                 //spawn small sphere
+                Debug.Log("Spawning small sphere");
             }
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio) &&
                 randomNumber <= 1.0f) {
                 //spawn big sphere
+                Debug.Log("Spawning big sphere");
             }
 
             StartCoroutine(SetCanSpawn());

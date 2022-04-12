@@ -6,6 +6,6 @@ public class SmallCube : Cube
 {
     public override void HandleOnDie()
     {
-        
+        enemyManager.SmallCubeDied();
     }
 }
