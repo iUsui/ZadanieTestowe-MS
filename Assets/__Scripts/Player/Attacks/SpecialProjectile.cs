@@ -8,7 +8,7 @@ public class SpecialProjectile : MonoBehaviour
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private float flySpeed = 10.0f;
     [SerializeField] private GameObject explosionPrefab = null;
-    private int attackDamage = 25;
+    public int attackDamage = 25;
 
     public static event Action<SpecialProjectile> OnSpawned;
     public static event Action<SpecialProjectile> OnDespawned;
@@ -20,9 +20,6 @@ public class SpecialProjectile : MonoBehaviour
         OnDespawned?.Invoke(this);
     }
 
-    public void SetAttackDamage(int newAttackDamage) {
-        attackDamage = newAttackDamage;
-    }
     private void Start() {
         rb.velocity = transform.forward * flySpeed;
     }

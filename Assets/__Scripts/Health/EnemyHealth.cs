@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
+    PlayerProps playerProps;
     [SerializeField] private int ownerId = -1;
     [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth = 0;
+    private int currentHealth = 0;
+    [SerializeField] private int scoreValue = 100;
+    [SerializeField] private int experienceValue = 20;
     public event Action OnDie;
 
-    public static event Action<Health> OnSpawn;
-    public static event Action<Health> OnDespawn;
+    public static event Action<EnemyHealth> OnSpawn;
+    public static event Action<EnemyHealth> OnDespawn;
 
 
 #region Getters
@@ -38,6 +41,7 @@ public class Health : MonoBehaviour
 #endregion
 
     private void Start() {
+        playerProps = PlayerProps.instance;
         OnSpawn?.Invoke(this);
         currentHealth = maxHealth;
     }
@@ -47,6 +51,15 @@ public class Health : MonoBehaviour
     }
 
     public void TakeDamage(int value) {
+        if (currentHealth <= 0) { return; }
+        currentHealth -= value;
+        if (currentHealth > 0) { return; }
+        playerProps.GainExperience(experienceValue);
+        playerProps.GainScore(scoreValue);
+        OnDie?.Invoke();
+    }
+
+    public void CollidedWithWall(int value) {
         if (currentHealth <= 0) { return; }
         currentHealth -= value;
         if (currentHealth > 0) { return; }

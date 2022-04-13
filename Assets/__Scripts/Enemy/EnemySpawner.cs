@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
     private bool canSpawn = true;
 
     private EnemyManager enemyManager = null;
-    private Health smallCubeHealthScript = null;
+    private EnemyHealth smallCubeHealthScript = null;
     private Cube smallCubeScript = null;
 
     private void Start() {
@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
             throw new Exception("max time to spawn has to be bigger than min time to spawn");
         }
         enemyManager = EnemyManager.instance;
-        smallCubeHealthScript = smallCubePrefab.GetComponent<Health>();
+        smallCubeHealthScript = smallCubePrefab.GetComponent<EnemyHealth>();
         smallCubeScript = smallCubePrefab.GetComponent<Cube>();
     }
 
@@ -52,12 +52,12 @@ public class EnemySpawner : MonoBehaviour
             );
             if (randomNumber <= smallCubeSpawnRatio) {
                 GameObject newSmallCube = smallCubePrefab;
-                newSmallCube.GetComponent<Health>().SetOwnerId(enemyManager.GetMyId());
+                newSmallCube.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
                 Instantiate(smallCubePrefab, spawnPosition, smallCubePrefab.transform.rotation);
             }
             else if (randomNumber > smallCubeSpawnRatio && randomNumber < (smallCubeSpawnRatio+bigCubeSpawnRatio)) {
                 GameObject newBigCube = bigCubePrefab;
-                newBigCube.GetComponent<Health>().SetOwnerId(enemyManager.GetMyId());
+                newBigCube.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
                 Cube cube = newBigCube.GetComponent<Cube>();
                 cube.movementSpeed = smallCubeScript.GetMovementSpeed() * 0.8f;
                 cube.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth() + (smallCubeHealthScript.GetMaxHealth()/2));
@@ -66,14 +66,11 @@ public class EnemySpawner : MonoBehaviour
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio) && 
                 randomNumber < (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio)) {
                 //spawn small sphere
-                Debug.Log("Spawning small sphere");
             }
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio) &&
                 randomNumber <= 1.0f) {
                 //spawn big sphere
-                Debug.Log("Spawning big sphere");
             }
-
             StartCoroutine(SetCanSpawn());
         }
     }

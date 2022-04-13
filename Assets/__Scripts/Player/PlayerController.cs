@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
     [SerializeField] private float movementSpeed = 5.0f;
-    [SerializeField] private int attackDamage = 25;
+    private int attackDamage = 25;
     [SerializeField] private Transform shootPoint = null;
     [SerializeField] private GameObject projectilePrefab = null;
     [SerializeField] private GameObject specialProjectilePrefab = null;
-    [SerializeField] private float specialProjectileCooldown = 2.0f;
+    private float specialProjectileCooldown = 2.0f;
     [SerializeField] private TMP_Text textCooldown = null;
     private bool canShootSpecialProjectile = true;
     private float shootTime = 0;
@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 #region Setters
     public void SetAttackDamage(int newAttackDamage) {
         attackDamage = newAttackDamage;
+    }
+    public void SetSpecialProjectileCooldown(float newSpecialProjectileCooldown) {
+        specialProjectileCooldown = newSpecialProjectileCooldown;
     }
 #endregion
 
@@ -52,6 +55,26 @@ public class PlayerController : MonoBehaviour
             currentPosition += new Vector3(previousInput.x, 0f, 0f) * movementSpeed * Time.deltaTime;
         }
         transform.position = currentPosition;
+
+        HandleShootingSpecialProjectile();
+    }
+
+    
+
+    private void SetPreviousInput(InputAction.CallbackContext ctx) {
+        previousInput = ctx.ReadValue<Vector2>();
+    }
+
+    private void ShotProjectile() {
+        GameObject newProjectileGameObject = projectilePrefab;
+        Projectile newProjectileScript = newProjectileGameObject.GetComponent<Projectile>();
+        newProjectileScript.attackDamage = attackDamage;
+        Instantiate(newProjectileGameObject, shootPoint.position, shootPoint.rotation);
+    }
+
+// special projectile
+    private void HandleShootingSpecialProjectile()
+    {
         if (Input.GetKeyDown(KeyCode.Y) && canShootSpecialProjectile) {
             ShootingSpecialProjectile();
         }
@@ -64,33 +87,19 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void SetPreviousInput(InputAction.CallbackContext ctx) {
-        previousInput = ctx.ReadValue<Vector2>();
-    }
-
-    private void ShotProjectile() {
-        Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
-    }
-
-// special projectile
     private void ShootingSpecialProjectile() {
         if (specialProjectiles.Count != 0) {
                 foreach (var specialProjectile in specialProjectiles) {
                     specialProjectile.Explode();
                 }
-                // StartCoroutine(SetCanShootSpecialProjectile());
                 shootTime = Time.realtimeSinceStartup;
                 canShootSpecialProjectile = false;
                 return;
             }
             GameObject newSpecialProjectile = specialProjectilePrefab;
-            newSpecialProjectile.GetComponent<SpecialProjectile>().SetAttackDamage(attackDamage);
+            SpecialProjectile specialProjectileScript = newSpecialProjectile.GetComponent<SpecialProjectile>();
+            specialProjectileScript.attackDamage = attackDamage;
             Instantiate(newSpecialProjectile, shootPoint.position, shootPoint.rotation);
-    }
-    private IEnumerator SetCanShootSpecialProjectile() {
-        canShootSpecialProjectile = false;
-        yield return new WaitForSeconds(specialProjectileCooldown);
-        canShootSpecialProjectile = true;
     }
 
 // event handlers
@@ -98,7 +107,6 @@ public class PlayerController : MonoBehaviour
     {
         specialProjectiles.Add(projectile);
     }
-
     private void HandleOnDespawnedSpecialProjectile(SpecialProjectile projectile)
     {
         specialProjectiles.Remove(projectile);

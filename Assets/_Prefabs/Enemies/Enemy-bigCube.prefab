@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 7160252867538592003}
   - component: {fileID: 5822212145200841681}
   - component: {fileID: 7160252867538592002}
-  - component: {fileID: 7160252867538592005}
   - component: {fileID: 7160252867538592004}
+  - component: {fileID: 1582306731509928897}
   m_Layer: 0
   m_Name: Enemy-bigCube
   m_TagString: Enemy
@@ -176,21 +176,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2420969, y: 1.2622714, z: 1.2542019}
   m_Center: {x: 0, y: 0.62219214, z: 0.0020179749}
---- !u!114 &7160252867538592005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7160252867538592001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fdb1991d0b28e4b9e4574f689bb72b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: -1
-  maxHealth: 0
-  currentHealth: 0
 --- !u!114 &7160252867538592004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +189,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5822212145200841681}
-  movementSpeed: 5
-  health: {fileID: 7160252867538592005}
+  movementSpeed: 4
+  health: {fileID: 1582306731509928897}
   renderer: {fileID: 7160252867456971181}
   damage: 10
+--- !u!114 &1582306731509928897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160252867538592001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fdb1991d0b28e4b9e4574f689bb72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 5
+  maxHealth: 0
+  scoreValue: 200
+  experienceValue: 50

@@ -8,7 +8,6 @@ public class BigCube : Cube
     public override void HandleOnDie()
     {
         enemyManager.BigCubeDied();
-        Debug.Log($"rip");
         Destroy(gameObject);
     }
 

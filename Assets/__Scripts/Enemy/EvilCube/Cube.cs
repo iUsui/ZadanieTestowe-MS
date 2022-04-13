@@ -7,7 +7,7 @@ public abstract class Cube : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] public float movementSpeed = 5.0f;
-    [SerializeField] public Health health = null;
+    [SerializeField] public EnemyHealth health = null;
     [SerializeField] private new Renderer renderer = null;
     private Color color;
     [NonSerialized] public EnemyManager enemyManager = null;

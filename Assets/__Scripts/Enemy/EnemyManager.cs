@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     [SerializeField] private int myId = -1;
 
-    [SerializeField] private List<Health> myFoes = new List<Health>();
+    [SerializeField] private List<EnemyHealth> myFoes = new List<EnemyHealth>();
     [SerializeField] private List<Cube> cubes = new List<Cube>();
     [SerializeField] private List<Sphere> spheres = new List<Sphere>();
     [SerializeField] private List<SmallSphere> smallSpheres = new List<SmallSphere>();
@@ -19,16 +19,16 @@ public class EnemyManager : MonoBehaviour
 
     private void OnEnable() {
         instance = this;
-        Health.OnSpawn += HandleOnSpawn;
-        Health.OnDespawn += HandleOnDespawn;
+        EnemyHealth.OnSpawn += HandleOnSpawn;
+        EnemyHealth.OnDespawn += HandleOnDespawn;
     }
 
     private void OnDisable() {
-        Health.OnSpawn -= HandleOnSpawn;
-        Health.OnDespawn -= HandleOnDespawn;
+        EnemyHealth.OnSpawn -= HandleOnSpawn;
+        EnemyHealth.OnDespawn -= HandleOnDespawn;
     }
 
-    private void HandleOnSpawn(Health health)
+    private void HandleOnSpawn(EnemyHealth health)
     {
         if (health.GetOwnerId() == myId) {
             myFoes.Add(health);
@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void HandleOnDespawn(Health health)
+    private void HandleOnDespawn(EnemyHealth health)
     {
         if (health.GetOwnerId() == myId) {
             myFoes.Remove(health);
@@ -64,7 +64,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SmallCubeReachedRedLine() {
         foreach (var cube in cubes) {
-            Health cubeHealth = cube.GetComponent<Health>();
+            EnemyHealth cubeHealth = cube.GetComponent<EnemyHealth>();
             int addHealth = (int)(cubeHealth.GetMaxHealth() * 0.1);
             cubeHealth.SetMaxHealth(cubeHealth.GetMaxHealth() + addHealth);
             cubeHealth.SetCurrentHealth(cubeHealth.GetCurrentHealth() + addHealth);
@@ -72,12 +72,9 @@ public class EnemyManager : MonoBehaviour
     }
 
     public void BigCubeDied() {
-        Debug.Log("Im here 1..");
         foreach (var enemy in myFoes) {
-            Debug.Log("Im here fe..");
             float enemyHealth = enemy.GetCurrentHealth() / enemy.GetMaxHealth();
             if (enemyHealth < 0.5f) {
-                Debug.Log("Im here..");
                 enemy.SetCurrentHealth(enemy.GetMaxHealth());
             }
         }

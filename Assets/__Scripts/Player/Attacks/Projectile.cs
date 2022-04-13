@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private float flySpeed = 10.0f;
-    [SerializeField] private int attackDamage = 25;
+    [SerializeField] public int attackDamage = 25;
 
     private void Start() {
         rb.velocity = transform.forward * flySpeed;
@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
             return;
         }
         if (other.CompareTag("Enemy")) {
-            other.GetComponent<Health>().TakeDamage(attackDamage);
+            other.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
             Destroy(gameObject);
         }
          
