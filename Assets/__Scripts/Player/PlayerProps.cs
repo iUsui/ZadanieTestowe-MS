@@ -7,6 +7,7 @@ public class PlayerProps : MonoBehaviour
 {
     public static PlayerProps instance;
     [SerializeField] private Health health = null;
+    [SerializeField] private int experience;
 
     public Health GetHealth() {
         return health;

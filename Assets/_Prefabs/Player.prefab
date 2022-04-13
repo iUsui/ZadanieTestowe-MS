@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 4741730616864545446}
   - component: {fileID: 4741730616864545451}
   - component: {fileID: 4741730616864545448}
+  - component: {fileID: 1814219079}
+  - component: {fileID: 1814219080}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -188,8 +190,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
+  attackDamage: 25
   projectilePrefab: {fileID: 7279227738850724031, guid: bc1c02648626b02479f0a97ee0018ed4, type: 3}
+  specialProjectilePrefab: {fileID: 8843209627985989412, guid: 356c4924d57c5ec49838740eab407057, type: 3}
+  specialProjectiles: []
   shootPoint: {fileID: 4741730616655214867}
+--- !u!114 &1814219079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741730616864545447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f63d02268d0dd45ae7495860fb15a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1814219080}
+  experience: 0
+--- !u!114 &1814219080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741730616864545447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fdb1991d0b28e4b9e4574f689bb72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 1
+  maxHealth: 1000
+  currentHealth: 0
 --- !u!1 &4741730617438642412
 GameObject:
   m_ObjectHideFlags: 0

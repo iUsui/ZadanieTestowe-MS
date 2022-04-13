@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5310313069250382561}
-  movementSpeed: 15
+  movementSpeed: 5
   health: {fileID: 8363151640362187208}
   renderer: {fileID: 8363151640496291882}
   damage: 10
