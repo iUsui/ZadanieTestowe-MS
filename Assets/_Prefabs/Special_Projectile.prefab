@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2925181484866193296}
-  flySpeed: 10
+  flySpeed: 30
   explosionPrefab: {fileID: 6224938421614777682, guid: 1f7f2ce10b04dd14f95b7596242962cb, type: 3}
 --- !u!1 &8843209628631802395
 GameObject:
