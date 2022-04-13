@@ -18,9 +18,7 @@ public abstract class SphereScript : MonoBehaviour
     private void OnDisable() {
         health.OnDie -= HandleOnDie;
     }
-    public float GetMovementSpeed() {
-        return movementSpeed;
-    }
+
     private void Start() {
         enemyManager = EnemyManager.instance;
         player = PlayerProps.instance;

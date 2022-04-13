@@ -50,32 +50,36 @@ public class EnemySpawner : MonoBehaviour
                 0f,
                 UnityEngine.Random.Range(bottomLeftPoint.z, topRightPoint.z)
             );
+            //spawn small cube
             if (randomNumber <= smallCubeSpawnRatio) {
                 GameObject newSmallCube = smallCubePrefab;
-                newSmallCube.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                newSmallCube.GetComponent<EnemyHealth>().ownerId = enemyManager.GetMyId();
                 Instantiate(smallCubePrefab, spawnPosition, smallCubePrefab.transform.rotation);
             }
+            //spawn big cube
             else if (randomNumber > smallCubeSpawnRatio && randomNumber < (smallCubeSpawnRatio+bigCubeSpawnRatio)) {
                 GameObject newBigCube = bigCubePrefab;
-                newBigCube.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                newBigCube.GetComponent<EnemyHealth>().ownerId = enemyManager.GetMyId();
                 Cube cube = newBigCube.GetComponent<Cube>();
                 cube.movementSpeed = smallCubeScript.GetMovementSpeed() * 0.8f;
                 cube.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth() + (smallCubeHealthScript.GetMaxHealth()/2));
                 Instantiate(newBigCube, spawnPosition, smallCubePrefab.transform.rotation);
             }
+            //spawn small sphere
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio) && 
                 randomNumber < (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio)) {
                 GameObject newSmallSphere = smallSpherePrefab;
-                newSmallSphere.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                newSmallSphere.GetComponent<EnemyHealth>().ownerId = enemyManager.GetMyId();
                 SphereScript sphere = newSmallSphere.GetComponent<SphereScript>();
                 sphere.movementSpeed = smallCubeScript.GetMovementSpeed() * 1.5f;
                 sphere.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth());
                 Instantiate(newSmallSphere, spawnPosition, newSmallSphere.transform.rotation);
             }
+            //spawn big sphere
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio) &&
                 randomNumber <= 1.0f) {
                 GameObject newBigSphere = bigSpherePrefab;
-                newBigSphere.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                newBigSphere.GetComponent<EnemyHealth>().ownerId = enemyManager.GetMyId();
                 SphereScript sphere = newBigSphere.GetComponent<SphereScript>();
                 sphere.movementSpeed = smallCubeScript.GetMovementSpeed() * 1.5f;
                 sphere.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth() + (smallCubeHealthScript.GetMaxHealth()/2));

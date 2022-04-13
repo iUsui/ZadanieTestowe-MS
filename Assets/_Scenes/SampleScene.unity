@@ -2670,7 +2670,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 332153397, guid: c4aa3c15e956f3643b42f91b5886cb10, type: 3}
       propertyPath: maxHealth
-      value: 20
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 39629507068243472, guid: c4aa3c15e956f3643b42f91b5886cb10, type: 3}
       propertyPath: scoreText

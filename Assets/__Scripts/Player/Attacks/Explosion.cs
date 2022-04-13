@@ -8,10 +8,6 @@ public class Explosion : MonoBehaviour
     [SerializeField] private float timeBeforeDisablingCollider = 0.6f;
     [SerializeField] private new SphereCollider collider = null;
     public int attackDamage;
-    
-    public void SetAttackDamage(int newAttackDamage) {
-        attackDamage = newAttackDamage;
-    }
 
     private void Start() {
         collider.enabled = true;

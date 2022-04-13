@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
     private float shootTime = 0;
     
     private List<SpecialProjectile> specialProjectiles = new List<SpecialProjectile>();
-    
 
-#region Getters
-#endregion
+    private Controls controls;
+    private Vector2 previousInput;
+
 #region Setters
     public void SetAttackDamage(int newAttackDamage) {
         attackDamage = newAttackDamage;
@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
     }
 #endregion
 
-    private Controls controls;
-    private Vector2 previousInput;
     private void OnEnable() {
         instance = this;
         controls = new Controls();
@@ -62,8 +60,6 @@ public class PlayerController : MonoBehaviour
 
         HandleShootingSpecialProjectile();
     }
-
-    
 
     private void SetPreviousInput(InputAction.CallbackContext ctx) {
         previousInput = ctx.ReadValue<Vector2>();
