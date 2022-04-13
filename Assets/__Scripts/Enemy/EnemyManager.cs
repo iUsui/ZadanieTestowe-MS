@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private List<EnemyHealth> myFoes = new List<EnemyHealth>();
     [SerializeField] private List<Cube> cubes = new List<Cube>();
-    [SerializeField] private List<Sphere> spheres = new List<Sphere>();
+    [SerializeField] private List<SphereScript> spheres = new List<SphereScript>();
     [SerializeField] private List<SmallSphere> smallSpheres = new List<SmallSphere>();
 
     public int GetMyId() {
@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
             if (newFoe.TryGetComponent<Cube>(out Cube cube)) {
                 cubes.Add(cube);
             }
-            else if (newFoe.TryGetComponent<Sphere>(out Sphere sphere)) {
+            else if (newFoe.TryGetComponent<SphereScript>(out SphereScript sphere)) {
                 spheres.Add(sphere);
             }
             if (newFoe.TryGetComponent<SmallSphere>(out SmallSphere smallSphere)) {
@@ -53,7 +53,7 @@ public class EnemyManager : MonoBehaviour
             if (newFoe.TryGetComponent<Cube>(out Cube cube)) {
                 cubes.Remove(cube);
             }
-            else if (newFoe.TryGetComponent<Sphere>(out Sphere sphere)) {
+            else if (newFoe.TryGetComponent<SphereScript>(out SphereScript sphere)) {
                 spheres.Remove(sphere);
             }
             if (newFoe.TryGetComponent<SmallSphere>(out SmallSphere smallSphere)) {
@@ -80,11 +80,15 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void SmallSphereDied() {
-
+    public void SmallSphereBoost() {
+        foreach (var sphere in smallSpheres) {
+            sphere.movementSpeed += (float)(sphere.movementSpeed * 0.1);
+        }
     }
     
-    public void BigSphereDied() {
-
+    public void BigSphereBoost() {
+        foreach (var sphere in spheres) {
+            sphere.movementSpeed -= (float)(sphere.movementSpeed * 0.1);
+        }
     }
 }

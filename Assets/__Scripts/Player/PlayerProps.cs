@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerProps : MonoBehaviour
 {
     public static PlayerProps instance;
     private PlayerController playerController;
     [SerializeField] private PlayerHealth health = null;
-    [SerializeField] private int experience;
-    [SerializeField] private int score;
+    private int experience;
+    private int score;
     [SerializeField] private TMP_Text scoreText = null;
     private int playerLevel = 1;
     private int currentPlayerAttackDamage;
@@ -25,6 +26,10 @@ public class PlayerProps : MonoBehaviour
 
     [SerializeField] List<int> playerAttackDamageLevels = new List<int>(3);
     [SerializeField] List<float> playerSpecialAttackCooldownLevel = new List<float>(3);
+
+    [Header("OnDieProperties")]
+    [SerializeField] private GameObject menuPanelObject = null;
+    [SerializeField] private TMP_Text finalScoreText = null;
 
     public PlayerHealth GetHealth() {
         return health;
@@ -80,13 +85,15 @@ public class PlayerProps : MonoBehaviour
     private void HandleOnDie()
     {
         Pause();
-        //display menu to restart game and show scoreboard
+        finalScoreText.text = $"Score: {score}";
+        menuPanelObject.SetActive(true);
     }
 
     private void Pause(){
         Time.timeScale = 0;
     }
-    private void Restart() {
-
+    public void Restart() {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
     }
 }

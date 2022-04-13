@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     PlayerProps playerProps;
-    [SerializeField] private int ownerId = -1;
+    private int ownerId = -1;
     [SerializeField] private int maxHealth;
     private int currentHealth = 0;
     [SerializeField] private int scoreValue = 100;
@@ -53,16 +53,12 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int value) {
         if (currentHealth <= 0) { return; }
         currentHealth -= value;
+        if (TryGetComponent<SmallSphere>(out SmallSphere smallSphere)) {
+            smallSphere.SmallSphereTookDamage();
+        }
         if (currentHealth > 0) { return; }
         playerProps.GainExperience(experienceValue);
         playerProps.GainScore(scoreValue);
-        OnDie?.Invoke();
-    }
-
-    public void CollidedWithWall(int value) {
-        if (currentHealth <= 0) { return; }
-        currentHealth -= value;
-        if (currentHealth > 0) { return; }
         OnDie?.Invoke();
     }
 }

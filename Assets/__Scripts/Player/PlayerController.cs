@@ -39,12 +39,16 @@ public class PlayerController : MonoBehaviour
         controls = new Controls();
         controls.Player.PlayerMovement.performed += SetPreviousInput;
         controls.Player.PlayerMovement.canceled += SetPreviousInput;
-        controls.Player.PlayerShotting.started += _ => ShotProjectile();
+        controls.Player.PlayerShotting.performed += _ => ShotProjectile();
         controls.Enable();
         SpecialProjectile.OnSpawned += HandleOnSpawnedSpecialProjectile;
         SpecialProjectile.OnDespawned += HandleOnDespawnedSpecialProjectile;
     }
     private void OnDisable() {
+        controls.Player.PlayerMovement.performed -= SetPreviousInput;
+        controls.Player.PlayerMovement.canceled -= SetPreviousInput;
+        controls.Player.PlayerShotting.performed -= _ => ShotProjectile();
+        controls.Disable();
         SpecialProjectile.OnSpawned -= HandleOnSpawnedSpecialProjectile;
         SpecialProjectile.OnDespawned -= HandleOnDespawnedSpecialProjectile;
     }

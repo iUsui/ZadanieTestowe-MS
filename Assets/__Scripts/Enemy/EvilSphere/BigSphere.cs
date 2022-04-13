@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigSphere : MonoBehaviour
+public class BigSphere : SphereScript
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int damage = 10;
+    public override void HandleOnDie()
     {
-        
+        Destroy(gameObject);
+    }
+    
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wall")) {
+            player.GetHealth().TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void BigSphereTookDamage() {
+        enemyManager.BigSphereBoost();
     }
 }

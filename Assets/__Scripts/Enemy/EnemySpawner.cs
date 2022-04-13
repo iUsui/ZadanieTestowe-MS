@@ -65,11 +65,21 @@ public class EnemySpawner : MonoBehaviour
             }
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio) && 
                 randomNumber < (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio)) {
-                //spawn small sphere
+                GameObject newSmallSphere = smallSpherePrefab;
+                newSmallSphere.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                SphereScript sphere = newSmallSphere.GetComponent<SphereScript>();
+                sphere.movementSpeed = smallCubeScript.GetMovementSpeed() * 1.5f;
+                sphere.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth());
+                Instantiate(newSmallSphere, spawnPosition, newSmallSphere.transform.rotation);
             }
             else if (randomNumber > (smallCubeSpawnRatio + bigCubeSpawnRatio + smallSphereSpawnRatio) &&
                 randomNumber <= 1.0f) {
-                //spawn big sphere
+                GameObject newBigSphere = bigSpherePrefab;
+                newBigSphere.GetComponent<EnemyHealth>().SetOwnerId(enemyManager.GetMyId());
+                SphereScript sphere = newBigSphere.GetComponent<SphereScript>();
+                sphere.movementSpeed = smallCubeScript.GetMovementSpeed() * 1.5f;
+                sphere.health.SetMaxHealth(smallCubeHealthScript.GetMaxHealth() + (smallCubeHealthScript.GetMaxHealth()/2));
+                Instantiate(newBigSphere, spawnPosition, newBigSphere.transform.rotation);
             }
             StartCoroutine(SetCanSpawn());
         }
